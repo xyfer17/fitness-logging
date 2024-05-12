@@ -1,22 +1,39 @@
-import { Request, Response, RestController } from '@libs/boat';
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import {
+  ApiResponse,
+  Request,
+  ResponseUtility,
+  RestController,
+} from '@libs/boat';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { UserService } from '../services';
-import { UserDetailTransformer } from '@app/transformer';
+import { ExerciseDto, WeightDto } from '../dto';
+import { AccessTokenGuard } from '@app/auth';
 
 @Controller('users')
+@UseGuards(AccessTokenGuard)
 export class UserController extends RestController {
   constructor(private service: UserService) {
     super();
   }
 
-  @Get('/profile')
-  async getProfile(
+  @Post('create-exercise-log')
+  async createExerciseLog(
     @Req() req: Request,
-    @Res() res: Response,
-  ): Promise<Response> {
-    const user = await this.service.get();
-    return res.success(
-      await this.transform(user, new UserDetailTransformer(), { req }),
-    );
+    @Body() body: ExerciseDto,
+  ): Promise<ApiResponse> {
+    const { user } = req;
+
+    const result = await this.service.createExerciseLog(body, user.id);
+    return ResponseUtility.sendSuccessResponse(result);
+  }
+
+  @Post('create-weight-log')
+  async createWeightLog(
+    @Req() req: Request,
+    @Body() body: WeightDto,
+  ): Promise<ApiResponse> {
+    const { user } = req;
+    const result = await this.service.createWeightLog(body, user.id);
+    return ResponseUtility.sendSuccessResponse(result);
   }
 }

@@ -4,6 +4,10 @@ import { ServerOptions } from './interfaces';
 import { ConfigService } from '@nestjs/config';
 import { RequestGuard } from './guards';
 import { ExceptionFilter } from '../exceptions';
+import { ValidationPipe } from '@nestjs/common';
+import { ValidatorPipeOptions } from './constants';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 export class RestServer {
   private module: any;
@@ -15,7 +19,7 @@ export class RestServer {
    */
 
   static async make(module: any, options?: ServerOptions): Promise<void> {
-    const app = await NestFactory.create(module);
+    const app = await NestFactory.create<NestExpressApplication>(module, {});
 
     if (options?.addValidationContainer) {
       useContainer(app.select(module), { fallbackOnErrors: true });
@@ -23,12 +27,17 @@ export class RestServer {
 
     app.enableCors({ origin: true });
 
+    app.setBaseViewsDir(join('views'));
+    app.setViewEngine('hbs');
+
     app.useGlobalGuards(new RequestGuard());
     const { httpAdapter } = app.get(HttpAdapterHost);
     app.useGlobalFilters(new ExceptionFilter(httpAdapter));
     options.globalPrefix && app.setGlobalPrefix(options.globalPrefix);
+    app.useGlobalPipes(new ValidationPipe(ValidatorPipeOptions));
 
     const config = app.get(ConfigService, { strict: false });
+
     await app.listen(options.port || config.get<number>('app.port'));
   }
 }

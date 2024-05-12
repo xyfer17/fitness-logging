@@ -6,6 +6,8 @@ import { ConsoleModule } from '@squareboat/nest-console';
 import { ObjectionModule } from '@squareboat/nestjs-objection';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocalizationModule } from '@squareboat/nestjs-localization';
+import { AuthModule } from './auth';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -19,10 +21,20 @@ import { LocalizationModule } from '@squareboat/nestjs-localization';
       path: 'resources/lang',
       fallbackLang: 'en',
     }),
+    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS,
+        },
+      },
+    }),
     BoatModule,
     UserModule,
-    EventModule,
-    ConsoleModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
