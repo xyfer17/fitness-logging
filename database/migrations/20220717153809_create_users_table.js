@@ -1,5 +1,5 @@
-exports.up = function (knex) {
-  return knex.schema.createTable('users', function (table) {
+exports.up = async function (knex) {
+  return await knex.schema.createTable('users', function (table) {
     table.increments('id').primary();
     table.string('email').notNullable().unique();
     table.string('password').notNullable();
@@ -19,6 +19,6 @@ exports.up = function (knex) {
   });
 };
 
-exports.down = function (knex) {
-  return knex.schema.dropTable('users');
+exports.down =  async function (knex) {
+  return await knex.schema.dropTable('users');
 };

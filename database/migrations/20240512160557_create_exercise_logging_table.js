@@ -1,5 +1,5 @@
-exports.up = function (knex) {
-  return knex.schema.createTable('exercise_logs', function (table) {
+exports.up = async function (knex) {
+  return  await knex.schema.createTable('exercise_logs', function (table) {
     table.increments('id').primary();
     table.integer('userId').notNullable().references('id').inTable('users');
     table.string('exerciseName').notNullable();
@@ -23,6 +23,6 @@ exports.up = function (knex) {
   });
 };
 
-exports.down = function (knex) {
-  return knex.schema.dropTable('exercise_logs');
+exports.down = async function (knex) {
+  return await knex.schema.dropTable('exercise_logs');
 };

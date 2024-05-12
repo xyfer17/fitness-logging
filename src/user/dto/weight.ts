@@ -1,32 +1,28 @@
-import { IsDateString, IsNotEmpty, IsNumber, Min } from 'class-validator';
+import {  IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class WeightDto {
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be integer (kg)' })
   @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be number (kg)' })
   @IsNotEmpty()
   weight: number;
 
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be integer (inches)' })
   @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be number (inches)' })
   @IsNotEmpty()
   height: number;
 
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be integer (inches)' })
   @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be number (inches)' })
   @IsNotEmpty()
   bicepSize: number;
 
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be integer (inches)' })
   @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be number (inches)' })
   @IsNotEmpty()
   thighSize: number;
 
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be integer (inches)' })
   @Min(0)
+  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'must be number (inches)' })
   @IsNotEmpty()
   bellySize: number;
-
-  @IsDateString()
-  @IsNotEmpty()
-  date: string;
 }

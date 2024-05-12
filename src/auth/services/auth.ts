@@ -361,29 +361,36 @@ export class AuthService {
   }
 
   async verifyResetToken(token: string): Promise<boolean> {
-    const payload = await this.jwtService.verifyAsync(token, {
-      secret: this.config.get<string>('settings.reset_password_secret'),
-    });
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: this.config.get<string>('settings.reset_password_secret'),
+      });
 
-    const user = await this.users.firstWhere({ id: payload.userId });
+      const user = await this.users.firstWhere({ id: payload.userId });
 
-    if (
-      !user.passwordResetTimestamp ||
-      user.passwordResetTimestamp.toString() !== payload.timestamp
-    ) {
-      throw new HttpException(AppConstants.TOKEN_EXPIRED, HttpStatus.FORBIDDEN);
+      if (
+        !user.passwordResetTimestamp ||
+        user.passwordResetTimestamp.toString() !== payload.timestamp
+      ) {
+        throw new HttpException(
+          AppConstants.TOKEN_EXPIRED,
+          HttpStatus.FORBIDDEN,
+        );
+      }
+
+      if (user && user.resetPasswordStatus) {
+        throw new HttpException(
+          AppConstants.USER_ALREADY_VERIFIED,
+          HttpStatus.FORBIDDEN,
+        );
+      }
+
+      await this.users.update(user, { resetPasswordStatus: true });
+
+      return true;
+    } catch (error) {
+      this.handleTokenVerificationError(error);
     }
-
-    if (user && user.resetPasswordStatus) {
-      throw new HttpException(
-        AppConstants.USER_ALREADY_VERIFIED,
-        HttpStatus.FORBIDDEN,
-      );
-    }
-
-    await this.users.update(user, { resetPasswordStatus: true });
-
-    return true;
   }
 
   async resetPassword(token: string, data: resetPasswordDto): Promise<void> {
@@ -427,5 +434,15 @@ export class AuthService {
       subject: `Email Verification`,
       text: message,
     });
+  }
+
+  private handleTokenVerificationError(error: any): void {
+    this.logger.log(error);
+
+    if (error.message === 'jwt expired') {
+      throw new HttpException(AppConstants.TOKEN_EXPIRED, HttpStatus.FORBIDDEN);
+    }
+
+    throw new HttpException(error.message, HttpStatus.FORBIDDEN);
   }
 }

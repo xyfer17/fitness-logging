@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { EventModule } from '@squareboat/nest-events';
 import { UserModule } from './user';
 import { BoatModule } from '@libs/boat';
 import { ConsoleModule } from '@squareboat/nest-console';
@@ -32,6 +31,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
         },
       },
     }),
+    ConsoleModule,
     BoatModule,
     UserModule,
     AuthModule,

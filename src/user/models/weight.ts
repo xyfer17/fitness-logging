@@ -10,14 +10,13 @@ export class WeightLogModel extends BaseModel {
   bicepSize: number;
   thighSize: number;
   bellySize: number;
-  date: Date;
   createdAt: Date;
   updatedAt: Date;
 
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['weight', 'height', 'date'],
+      required: ['weight', 'height'],
       properties: {
         id: { type: 'integer' },
         weight: { type: 'number' },
@@ -25,9 +24,6 @@ export class WeightLogModel extends BaseModel {
         bicepSize: { type: 'number' },
         thighSize: { type: 'number' },
         bellySize: { type: 'number' },
-        date: { type: 'string', format: 'date' },
-        createdAt: { type: 'string', format: 'date-time' },
-        updatedAt: { type: 'string', format: 'date-time' },
       },
     };
   }

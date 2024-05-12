@@ -48,6 +48,7 @@ export class AuthController extends RestController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(@Body() body: loginDto): Promise<ApiResponse> {
     const response = await this.authService.validateUserByPassword(body);
     const { accessToken, refreshToken } = response;
@@ -70,6 +71,7 @@ export class AuthController extends RestController {
 
   @UseGuards(RefreshTokenGuard)
   @Post('refresh-tokens')
+  @HttpCode(HttpStatus.OK)
   async refreshToken(@Req() req: Request): Promise<ApiResponse> {
     const { user } = req;
     const authToken = await this.authService.refreshToken(user);

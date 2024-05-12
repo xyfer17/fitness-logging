@@ -1,18 +1,17 @@
-exports.up = function (knex) {
-  return knex.schema.createTable('weight_logs', function (table) {
+exports.up = async function (knex) {
+  return await knex.schema.createTable('weight_logs', function (table) {
     table.increments('id').primary();
     table.integer('userId').notNullable().references('id').inTable('users');
-    table.decimal('weight').notNullable();
-    table.decimal('height').notNullable();
-    table.decimal('bicepSize');
-    table.decimal('thighSize');
-    table.decimal('bellySize');
-    table.date('date').notNullable();
+    table.float('weight').notNullable();
+    table.float('height').notNullable();
+    table.float('bicepSize');
+    table.float('thighSize');
+    table.float('bellySize');
     table.timestamp('createdAt').defaultTo(knex.fn.now());
     table.timestamp('updatedAt').defaultTo(knex.fn.now());
   });
 };
 
-exports.down = function (knex) {
-  return knex.schema.dropTable('weight_logs');
+exports.down = async function (knex) {
+  return await knex.schema.dropTable('weight_logs');
 };
