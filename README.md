@@ -8,6 +8,7 @@ This repository contains the source code for a Node.js server. Follow the steps 
 
 ```bash
 git clone https://github.com/xyfer17/fitness-logging.git
+cd fitness-logging
 ```
 
 2. Create a `.env` file in the root directory and copy the contents from `.env.example` to `.env`. Modify the variables in the `.env` file as needed.
@@ -21,7 +22,6 @@ git clone https://github.com/xyfer17/fitness-logging.git
 4. Run the database migrations to create the necessary tables:
 
 ```bash
-cd fitness-logging
 node cli migrate
 ```
 
