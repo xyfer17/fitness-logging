@@ -8,12 +8,18 @@ This repository contains the source code for a Node.js server. Follow the steps 
 
 ```bash
 git clone https://github.com/xyfer17/fitness-logging.git
-cd fitness-logging
 ```
 
-2. Create a `.env` file in the root directory and copy the contents from `.env.example` to `.env`. Modify the variables in the `.env` file as needed.
+2. Install all dependency
 
-3. Set up the PostgreSQL database:
+```bash
+cd fitness-logging
+npm install
+```
+
+3. Create a `.env` file in the root directory and copy the contents from `.env.example` to `.env`. Modify the variables in the `.env` file as needed.
+
+4. Set up the PostgreSQL database:
 
    - Install PostgreSQL if you haven't already.
    - Create a new database.
