@@ -35,17 +35,19 @@ Below are the endpoints provided by the server:
 
 - Endpoint 3: `/api/v1//auth/verify-email/:token` - This endpoint is used to verify email using token.
 
-- Endpoint 4: `/api/v1/auth/refresh-tokens` - This endpoint is used to authenticate a user and regenerate access token using refresh token.
+- Endpoint 4: `/api/v1/auth/login` - This endpoint is used to authenticate a user and generate access and refresh tokens.
 
-- Endpoint 5: `/api/v1/auth/logout` - This endpoint is used to log out the user from the application.
+- Endpoint 5: `/api/v1/auth/refresh-tokens` - This endpoint is used to authenticate a user and regenerate access token using refresh token.
 
-- Endpoint 6: `/api/v1/auth/forgot-password` - This endpoint is used to initiate the process of resetting a user's password by sending a reset link to the provided email address.
+- Endpoint 6: `/api/v1/auth/logout` - This endpoint is used to log out the user from the application.
 
-- Endpoint 7: `/api/v1/auth/reset-password/:token` - The endpoint triggers an HTTP POST request to reset the password using the provided token in the URL. The request body should contain the user's email, new password, and confirmation of the new password.
+- Endpoint 7: `/api/v1/auth/forgot-password` - This endpoint is used to initiate the process of resetting a user's password by sending a reset link to the provided email address.
 
-- Endpoint 7: `/api/v1/users/create-exercise-log` - The endpoint allows the creation of an exercise log for a user.
+- Endpoint 8: `/api/v1/auth/reset-password/:token` - The endpoint triggers an HTTP POST request to reset the password using the provided token in the URL. The request body should contain the user's email, new password, and confirmation of the new password.
 
-- Endpoint 7: `/api/v1/users/create-weight-log` - The endpoint allows the creation of an weight log for a user.
+- Endpoint 9: `/api/v1/users/create-exercise-log` - The endpoint allows the creation of an exercise log for a user.
+
+- Endpoint 10: `/api/v1/users/create-weight-log` - The endpoint allows the creation of an weight log for a user.
 
 For detailed information about each endpoint, refer to the [Postman Documentation](https://documenter.getpostman.com/view/28605013/2sA3JNaLLg).
 
