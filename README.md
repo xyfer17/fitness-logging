@@ -31,6 +31,10 @@ npm install
 node cli migrate
 ```
 
+5. Setup SMTP Service:
+   - use any smtp service like  [Ethereal](https://ethereal.email/) or any other service.
+   -  add the smtp service creds in the .env file
+
 ## Endpoints
 
 Below are the endpoints provided by the server:
@@ -39,9 +43,9 @@ Below are the endpoints provided by the server:
 
 - Endpoint 2: `/api/v1/auth/send-verification-email` - This endpoint is used to send a verification email to the provided email address.
 
-- Endpoint 3: `/api/v1//auth/verify-email/:token` - This endpoint is used to verify email using token.
+- Endpoint 3: `/api/v1/auth/verify-email/:token` - This endpoint is used to verify email using token.
 
-- Endpoint 4: `/api/v1/auth/login` - This endpoint is used to authenticate a user and generate access and refresh tokens.
+- Endpoint 4: `/api/v1/auth/login` - This endpoint is used to authenticate a user and generate access and refresh tokens ( note: before login user email should be verified first using verification email).
 
 - Endpoint 5: `/api/v1/auth/refresh-tokens` - This endpoint is used to authenticate a user and regenerate access token using refresh token.
 
